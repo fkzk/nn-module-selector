@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import partial
 from typing import Any, Callable, Optional, Sequence, TypeVar, Union
 
@@ -33,8 +33,8 @@ def register_module(
 class PolicyItem:
     interface_name: str
     module_name: str
-    condition_fn: Callable[[str], bool] = lambda _: True,
-    module_kwargs: dict[str, Any] = dict(),
+    condition_fn: Callable[[str], bool] = lambda _: True
+    module_kwargs: dict[str, Any] = field(default_factory=dict)
 
 class ModuleSelector:
     policy: list[PolicyItem] = list()
