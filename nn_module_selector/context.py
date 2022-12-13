@@ -10,4 +10,4 @@ class ModuleContext:
         self.__class__._names.pop()
 
 def get_context() -> str:
-    return ModuleContext._names[-1]
+    return '.'.join(ModuleContext._names)
