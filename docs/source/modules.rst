@@ -1,4 +1,4 @@
-nn-module-selector
+nn_module_selector
 ==================
 
 .. toctree::
