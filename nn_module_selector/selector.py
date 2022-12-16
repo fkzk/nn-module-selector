@@ -14,6 +14,15 @@ def register_module(
     *optional_interfaces: Sequence[type[Interface]],
     alias: Optional[Union[str, Sequence[str]]] = None,
 ) -> Callable[[type[Module]], type[Module]]:
+    """Generates module registerer for specified interfaces.
+
+    Args:
+        interface (type[Interface]): _description_
+        alias (Optional[Union[str, Sequence[str]]], optional): _description_. Defaults to None.
+
+    Returns:
+        Callable[[type[Module]], type[Module]]: _description_
+    """
     interface = [interface, ] + list(optional_interfaces)
     def _register_module(module_cls):
         name = [module_cls.__name__, module_cls.__qualname__]
