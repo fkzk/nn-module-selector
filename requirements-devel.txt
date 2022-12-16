@@ -1,0 +1,6 @@
+# Documentation
+sphinx
+sphinx-rtd-theme
+
+# Testing
+pytest
