@@ -45,21 +45,22 @@ def register_module(
 @dataclass
 class PolicyItem:
     """A dataclass representing a policy entry for selecting the module to apply.
-
-    - interface_name (str): The name of the target Interface class.
-    - module_name (str): The name of the Module subclass to apply.
-    - condition_fn (Callable[[str], bool]):
-        A function that returns whether to apply this policy from the context name.
-        By default, this is set by what always returns `True` .
-    - module_kwargs (dict[str, Any]):
-        The keyword arguments for initializing the Module subclass.
-        The specified arguments should not be duplicated with the interface 
-        initialization arguments.
     """
     interface_name: str
+    """The name of the target Interface class."""
     module_name: str
+    """The name of the Module subclass to apply."""
     condition_fn: Callable[[str], bool] = lambda _: True
+    """
+    A function that returns whether to apply this policy from the context name.
+    By default, this is set by what always returns `True` .
+    """
     module_kwargs: dict[str, Any] = field(default_factory=dict)
+    """
+    The keyword arguments for initializing the Module subclass.
+    The specified arguments should not be duplicated with the interface 
+    initialization arguments.
+    """
 
 class ModuleSelector:
     policy: list[PolicyItem] = list()
