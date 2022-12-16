@@ -1,4 +1,7 @@
 class ModuleContext:
+    """This class provides a hierarchical context.
+
+    """
     _names: list[str] = list()
     def __init__(self, name: str):
         self.__class__._names.append(name)
