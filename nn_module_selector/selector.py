@@ -14,14 +14,18 @@ def register_module(
     *optional_interfaces: Sequence[type[Interface]],
     alias: Optional[Union[str, Sequence[str]]] = None,
 ) -> Callable[[type[Module]], type[Module]]:
-    """Generates module registerer for specified interfaces.
+    """Generates module registerer for the specified module interfaces.
 
     Args:
-        interface (type[Interface]): _description_
-        alias (Optional[Union[str, Sequence[str]]], optional): _description_. Defaults to None.
+        interface (type[Interface]):
+            An interface of which the Module subclass is an implementation.
+        alias (Optional[Union[str, Sequence[str]]], optional):
+            Aliases of the Module subclass. Defaults to None.
 
     Returns:
-        Callable[[type[Module]], type[Module]]: _description_
+        Callable[[type[Module]], type[Module]]:
+            A decorator of the Module subclass that register the subclass as an 
+            implementation of the specified module interfaces.
     """
     interface = [interface, ] + list(optional_interfaces)
     def _register_module(module_cls):
@@ -40,6 +44,18 @@ def register_module(
 
 @dataclass
 class PolicyItem:
+    """A dataclass representing a policy entry for selecting the module to apply.
+
+    - interface_name (str): The name of the target Interface class.
+    - module_name (str): The name of the Module subclass to apply.
+    - condition_fn (Callable[[str], bool]):
+        A function that returns whether to apply this policy from the context name.
+        By default, this is set by what always returns `True` .
+    - module_kwargs (dict[str, Any]):
+        The keyword arguments for initializing the Module subclass.
+        The specified arguments should not be duplicated with the interface 
+        initialization arguments.
+    """
     interface_name: str
     module_name: str
     condition_fn: Callable[[str], bool] = lambda _: True
@@ -77,6 +93,15 @@ class ModuleSelector:
         cls,
         policy: Sequence[Union[PolicyItem, tuple, dict]]
     ):
+        """Register new policies for choosing modules.
+
+        Args:
+            policy (Sequence[Union[PolicyItem, tuple, dict]]):
+                A sequence of policies to choose modules.
+                Every policy entry represents its target interface,
+                the concrete Module subclass to apply, the condition to apply,
+                and the options for initializing the module.
+        """
         for item in policy:
             if isinstance(item, tuple):
                 p = PolicyItem(*item)

@@ -10,7 +10,7 @@ Welcome to NN Module Selector's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   API <api/modules>
 
 
 Indices and tables
